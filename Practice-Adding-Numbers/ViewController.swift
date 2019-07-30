@@ -289,69 +289,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    func setNumbers (change: Int, startVector: SCNVector3) {
-        
-        print("set Numbers called")
-        
-        let masterParentNode = SCNNode()
-        masterParentNode.name = "NumberCircle"
-        masterParentNode.position = startVector
-        masterParentNode.eulerAngles = SCNVector3( 0, 0, 90.degreesToradians )
-        sceneView.scene.rootNode.addChildNode(masterParentNode)
-        
-        let range = [
-            [0.01, 0, 0, 0],
-            [Float(cos(-36.degreesToradians)) * 0.01 , Float(sin(-36.degreesToradians)) * 0.01 ,  36 , 0 ],
-            [Float(cos(-72.degreesToradians)) * 0.01, Float(sin(-72.degreesToradians)) * 0.01, 72, 0],
-            [Float(cos(-108.degreesToradians)) * 0.01, Float(sin(-108.degreesToradians)) * 0.01, 108, 0],
-            [Float(cos(-144.degreesToradians)) * 0.01, Float(sin(-144.degreesToradians)) * 0.01, 144, 0],
-            [Float(cos(-180.degreesToradians)) * 0.01, Float(sin(-180.degreesToradians)) * 0.01, 180, 0],
-            [Float(cos(-216.degreesToradians)) * 0.01, Float(sin(-216.degreesToradians)) * 0.01, 216, 0],
-            [Float(cos(-252.degreesToradians)) * 0.01, Float(sin(-252.degreesToradians)) * 0.01, 252, 0],
-            [Float(cos(-288.degreesToradians)) * 0.01, Float(sin(-288.degreesToradians)) * 0.01, 288, 0],
-            [Float(cos(-324.degreesToradians)) * 0.01, Float(sin(-324.degreesToradians)) * 0.01, 324, 0]
-            ] as [[Float]]
-        
-        
-        for i in 0...9 {
-            let parentNode = SCNNode()
-            parentNode.name = String(i)
-            
-            if (10 - i) + change <= 9 {
-                parentNode.eulerAngles = SCNVector3( range[(10 - i) + change][2].degreesToradians , range[(10 - i) + change][3].degreesToradians, -90.degreesToradians )
-                parentNode.position = SCNVector3(x: range[(10 - i) + change][1], y: 0, z: range[(10 - i) + change][0])
-            } else {
-                parentNode.eulerAngles = SCNVector3( range[(10 - i) + change - 10][2].degreesToradians , range[(10 - i) + change - 10][3].degreesToradians, -90.degreesToradians )
-                parentNode.position = SCNVector3(x: range[(10 - i) + change - 10][1], y: 0, z: range[(10 - i) + change - 10][0])
-            }
-            
-            let node1 = SCNNode(geometry: SCNPlane(width: 0.01, height: 0.01))
-            
-            node1.geometry?.firstMaterial?.diffuse.contents = UIColor.black
-            node1.opacity = 0.5
-            node1.name = "circleTile"
-            
-            node1.geometry?.firstMaterial?.isDoubleSided = true
-            
-            parentNode.addChildNode(node1)
-            
-            let textGeometry = SCNText(string: String(i), extrusionDepth: 1)
-            textGeometry.font = UIFont(name: "Futura", size: 9)
-            
-            let textNode = SCNNode(geometry: textGeometry)
-            textNode.geometry?.firstMaterial?.diffuse.contents = UIColor.white
-            textNode.opacity = 1
-            
-            textNode.simdScale = SIMD3(repeating: 0.0005)
-            
-            textNode.centerAlign()
-            parentNode.addChildNode(textNode)
-            
-            masterParentNode.addChildNode(parentNode)
-            
-        }
-    }
-    
     func destroyNumberCircles () {
         sceneView.scene.rootNode.childNode(withName: "NumberCircle", recursively: false)?.removeFromParentNode()
     }
