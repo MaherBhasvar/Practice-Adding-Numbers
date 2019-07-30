@@ -151,7 +151,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 
                 sceneView.scene.rootNode.childNode(withName: selectedTile, recursively: false)?.removeFromParentNode()
                 
-                setNumbers2(change: change, startVector: rememberPosition)
+                setNumbers(change: change, startVector: rememberPosition)
                 
                 
                 
@@ -196,7 +196,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     // MARK: - Custom Functions
     
-    func setNumbers2 (change: Int, startVector: SCNVector3) {
+    func setNumbers (change: Int, startVector: SCNVector3) {
         let masterParentNode = SCNNode()
         masterParentNode.name = "NumberCircle"
         masterParentNode.position = startVector
